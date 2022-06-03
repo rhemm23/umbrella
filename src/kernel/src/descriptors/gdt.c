@@ -1,7 +1,6 @@
 #include "gdt.h"
-#include "print.h"
 
-static void gdt_set_entry(
+void gdt_set_entry(
   gdt_entry_t *entry,
   uint32_t base,
   uint32_t limit,
@@ -15,17 +14,4 @@ static void gdt_set_entry(
   entry->limit_low = (uint16_t)(limit & 0xFFFF);
   entry->access = access;
   entry->granularity = ((flags << 4) & 0xF0) | (uint8_t)((limit >> 16) & 0x0F);
-}
-
-void gdt_configure() {
-
-  gdt_ptr_t gdt_ptr = {
-    .base = 0x0500,
-    .size = 23
-  };
-
-  gdt_entry_t *gdt = (gdt_entry_t*)0x0500;
-  gdt_set_entry(&gdt[0], 0, 0, 0, 0);
-  gdt_set_entry(&gdt[1], 0, 0xFFFFF, 0x9A, 0xC);
-  gdt_set_entry(&gdt[2], 0, 0xFFFFF, 0x92, 0xC);
 }

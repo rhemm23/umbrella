@@ -19,9 +19,5 @@ void main() {
 
   mem_init();
 
-  log_info("hello!");
-  log_warn("uh oh!");
-  log_error("danger!");
-
   __asm__ __volatile__("cli; hlt");
 }
