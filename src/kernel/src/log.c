@@ -1,6 +1,10 @@
 #include "serial.h"
 #include "log.h"
 
+void log_init() {
+  serial_write_string("\n\nBEGIN LOG\n---------\n");
+}
+
 void logx(uint64_t value) {
   serial_write_char('0');
   serial_write_char('x');
@@ -26,13 +30,19 @@ void logx(uint64_t value) {
 }
 
 void log_info(char *str) {
-  serial_write_string("INFO: ");
+  serial_write_string(ANSI_COLOR_BLUE "INFO: " ANSI_COLOR_RESET);
   serial_write_string(str);
   serial_write_char('\n');
 }
 
 void log_warn(char *str) {
-  serial_write_string("WARN: ");
+  serial_write_string(ANSI_COLOR_YELLOW "WARN: " ANSI_COLOR_RESET);
+  serial_write_string(str);
+  serial_write_char('\n');
+}
+
+void log_error(char *str) {
+  serial_write_string(ANSI_COLOR_RED "ERROR: " ANSI_COLOR_RESET);
   serial_write_string(str);
   serial_write_char('\n');
 }

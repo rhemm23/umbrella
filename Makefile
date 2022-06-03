@@ -12,6 +12,9 @@ KERNEL_OBJS := $(patsubst src/kernel/src/%.c, bin/kernel/%.o, $(KERNEL_SRCS))
 run: bin/os.bin
 	qemu-system-i386 -m 2G -serial stdio -vga std -hda $<
 
+clean:
+	rm -rf bin
+
 bin/os.bin: bin/sect.bin bin/boot.bin bin/kernel.bin
 	mkdir -p $(dir $@)
 	cat $^ > $@

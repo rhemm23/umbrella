@@ -15,7 +15,13 @@ void mem_init() {
 void main() {
 
   serial_init();
+  log_init();
+
   mem_init();
+
+  log_info("hello!");
+  log_warn("uh oh!");
+  log_error("danger!");
 
   __asm__ __volatile__("cli; hlt");
 }
