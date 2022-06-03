@@ -28,7 +28,7 @@ bin/os.bin: bin/sect.bin bin/boot.bin bin/kernel.bin
 bin/kernel.bin: bin/kernel/entry.o $(KERNEL_OBJS) $(KERNEL_ASM_OBJS)
 	mkdir -p $(dir $@)
 	$(LD) -o $@ -T $(KERNEL_LINK) $^ /usr/local/i386elfgcc/lib/gcc/i386-elf/4.9.1/libgcc.a --oformat binary
-	dd if=/dev/null of=$@ bs=1 count=1 seek=16384
+	dd if=/dev/null of=$@ bs=1 count=1 seek=32768
 
 bin/kernel/%.o: kernel/src/%.asm
 	mkdir -p $(dir $@)

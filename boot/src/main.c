@@ -15,7 +15,7 @@ static void die(char *err) {
 
 void main() {
 
-  if (disk_read_sectors(0x8E00, 32, 9)) {
+  if (disk_read_sectors(0x8E00, 64, 9)) {
     die("Failed to read kernel from disk");
   }
 

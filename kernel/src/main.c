@@ -1,5 +1,6 @@
 #include "serial.h"
 #include "kalloc.h"
+#include "mouse.h"
 #include "type.h"
 #include "vesa.h"
 #include "log.h"
@@ -31,5 +32,7 @@ void main() {
   int_init();
   pci_init();
 
-  __asm__ __volatile__("cli; hlt");
+  mouse_init();
+
+  while (1);
 }
