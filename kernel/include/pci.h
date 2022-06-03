@@ -11,8 +11,22 @@
 #include "type.h"
 
 enum {
+  PCI_STORAGE_CLASS = 0x01,
   PCI_NETWORK_CLASS = 0x02,
   PCI_DISPLAY_CLASS = 0x03
+};
+
+enum {
+  PCI_STORAGE_SUBCLASS_SCSI = 0x00,
+  PCI_STORAGE_SUBCLASS_IDE = 0x01,
+  PCI_STORAGE_SUBCLASS_FLOPPY = 0x02,
+  PCI_STORAGE_SUBCLASS_IPI = 0x03,
+  PCI_STORAGE_SUBCLASS_RAID = 0x04,
+  PCI_STORAGE_SUBCLASS_ATA = 0x05,
+  PCI_STORAGE_SUBCLASS_SATA = 0x06,
+  PCI_STORAGE_SUBCLASS_SASCSI = 0x07,
+  PCI_STORAGE_SUBCLASS_NVM = 0x08,
+  PCI_STORAGE_SUBCLASS_OTHER = 0x80
 };
 
 typedef struct {
@@ -33,5 +47,6 @@ uint16_t pci_read_command(pci_device_t *device);
 void pci_write_command(pci_device_t *device, uint16_t value);
 
 pci_device_t * pci_find_device_by_class(uint8_t class);
+pci_device_t * pci_find_device_by_class_and_subclass(uint8_t class, uint8_t subclass);
 
 #endif

@@ -64,6 +64,15 @@ pci_device_t * pci_find_device_by_class(uint8_t class) {
   return 0;
 }
 
+pci_device_t * pci_find_device_by_class_and_subclass(uint8_t class, uint8_t subclass) {
+  for (uint8_t i = 0; i < num_pci_devices; i++) {
+    if (pci_devices[i]->class == class && pci_devices[i]->subclass == subclass) {
+      return pci_devices[i];
+    }
+  }
+  return 0;
+}
+
 void pci_map_devices() {
   pci_devices = (pci_device_t**)kalloc(PCI_MAX_DEVICES * sizeof(pci_device_t*));
   for (uint8_t bus = 0; bus < 256; bus++) {

@@ -12,7 +12,11 @@ KERNEL_ASM_SRCS := $(shell find kernel/src -name "*.asm")
 KERNEL_ASM_OBJS := $(patsubst kernel/src/%.asm, bin/kernel/%.o, $(KERNEL_ASM_SRCS))
 
 run: bin/os.bin
-	qemu-system-i386 -m 2G -serial stdio -vga std -hda $<
+	qemu-system-i386 \
+	-m 2G \
+	-serial stdio \
+	-vga std \
+	-hda $<
 
 clean:
 	rm -rf bin
