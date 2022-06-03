@@ -4,6 +4,7 @@
 #include "mouse.h"
 #include "type.h"
 #include "vesa.h"
+#include "dhcp.h"
 #include "log.h"
 #include "pmm.h"
 #include "vmm.h"
@@ -39,6 +40,8 @@ void main() {
   int_init();
   pci_init();
   net_init();
+
+  dhcp_send_discover_message();
 
   while (1);
 }
