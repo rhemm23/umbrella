@@ -1,5 +1,8 @@
 [global idt_flush]
 idt_flush:
-  mov eax, [esp + 4]
-  lidt [eax]
+  lidt [idt_desc]
   ret
+
+idt_desc:
+  dw 2047
+  dd 0x5000

@@ -27,9 +27,7 @@ void main() {
   log_init();
 
   mem_init();
-  //int_init();
-
-  uint8_t temp = 8 / 0;
+  int_init();
 
   __asm__ __volatile__("cli; hlt");
 }
