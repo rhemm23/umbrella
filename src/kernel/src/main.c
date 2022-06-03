@@ -8,6 +8,7 @@
 #include "exp.h"
 #include "irq.h"
 #include "idt.h"
+#include "pci.h"
 
 void mem_init() {
   pmm_init();
@@ -28,6 +29,7 @@ void main() {
 
   mem_init();
   int_init();
+  pci_init();
 
   __asm__ __volatile__("cli; hlt");
 }
