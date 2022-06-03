@@ -1,3 +1,4 @@
+#include "rtl8139.h"
 #include "serial.h"
 #include "kalloc.h"
 #include "mouse.h"
@@ -10,6 +11,12 @@
 #include "irq.h"
 #include "idt.h"
 #include "pci.h"
+#include "arp.h"
+
+void net_init() {
+  rtl8139_init();
+  arp_init();
+}
 
 void mem_init() {
   pmm_init();
@@ -31,8 +38,7 @@ void main() {
   mem_init();
   int_init();
   pci_init();
-
-  mouse_init();
+  net_init();
 
   while (1);
 }

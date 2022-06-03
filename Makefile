@@ -16,6 +16,9 @@ run: bin/os.bin
 	-m 2G \
 	-serial stdio \
 	-vga std \
+	-netdev tap,id=net0,ifname=tap0,script=no,downscript=no \
+	-device rtl8139,netdev=net0,id=nic0,mac=66:d3:0e:2f:99:00 \
+	-object filter-dump,id=f0,netdev=net0,file=/tmp/traffic.dat \
 	-hda $<
 
 clean:
