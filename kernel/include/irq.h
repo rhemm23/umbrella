@@ -23,7 +23,7 @@ extern void irq15();
 typedef void (*isr_t)(register_t*);
 
 void irq_init();
-void irq_handler(register_t *reg);
+void irq_handler(register_t reg);
 void irq_register_handler(int index, isr_t handler);
 
 #endif

@@ -1,16 +1,12 @@
 #include "mouse.h"
 #include "ps2.h"
 #include "irq.h"
-#include "log.h"
 
 uint8_t mouse_packet[3];
 uint8_t mouse_cycle = 0;
 
 void mouse_interrupt_handler(register_t *reg) {
   mouse_packet[mouse_cycle] = ps2_read_data_register();
-  if (mouse_cycle == 0 && (mouse_packet[0] & 1)) {
-    log_info("Left mouse button down");
-  }
   mouse_cycle = (mouse_cycle + 1) % 3;
 }
 

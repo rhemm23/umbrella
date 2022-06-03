@@ -32,9 +32,9 @@ void irq_register_handler(int index, isr_t handler) {
   }
 }
 
-void irq_handler(register_t *reg) {
-  if (interrupt_handlers[reg->int_no] != 0) {
-    interrupt_handlers[reg->int_no](reg);
+void irq_handler(register_t reg) {
+  if (interrupt_handlers[reg.int_no] != 0) {
+    interrupt_handlers[reg.int_no](&reg);
   }
-  pic_ack(reg->int_no);
+  pic_ack(reg.int_no);
 }

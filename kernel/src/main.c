@@ -32,5 +32,7 @@ void main() {
   int_init();
   pci_init();
 
+  mouse_init();
+
   while (1);
 }

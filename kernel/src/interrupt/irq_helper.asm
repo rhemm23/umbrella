@@ -36,9 +36,7 @@ irq_handler_helper:
   mov fs, ax
   mov gs, ax
 
-  push esp
   call irq_handler
-  pop esp
 
   pop ebx
   mov ds, bx
