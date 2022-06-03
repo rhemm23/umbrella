@@ -18,12 +18,12 @@ typedef struct {
   uint8_t reserved;
   uint8_t flags;
   uint16_t offset_high;
-} idt_entry_t;
+} __attribute__((packed)) idt_entry_t;
 
 typedef struct {
   uint16_t limit;
   uint32_t base;
-} idt_ptr_t;
+} __attribute__((packed)) idt_ptr_t;
 
 void idt_init();
 void idt_set_entry(int n, uint32_t handler);

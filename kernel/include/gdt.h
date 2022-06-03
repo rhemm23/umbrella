@@ -6,7 +6,7 @@
 typedef struct {
   uint16_t size;
   uint32_t base;
-} gdt_ptr_t;
+} __attribute__((packed)) gdt_ptr_t;
 
 typedef struct {
   uint16_t limit_low;
@@ -15,7 +15,7 @@ typedef struct {
   uint8_t access;
   uint8_t granularity;
   uint8_t base_high;
-} gdt_entry_t;
+} __attribute__((packed)) gdt_entry_t;
 
 void gdt_set_entry(
   gdt_entry_t *entry,
