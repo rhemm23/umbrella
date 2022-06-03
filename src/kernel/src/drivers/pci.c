@@ -50,7 +50,7 @@ uint16_t pci_read_command(pci_device_t *device) {
   return pci_read_config_word(device->bus, device->slot, device->func, 0x04);
 }
 
-void write_pci_command(pci_device_t *device, uint16_t value) {
+void pci_write_command(pci_device_t *device, uint16_t value) {
   port_write_dword(PCI_CONFIG_ADDRESS, pci_calc_address(device->bus, device->slot, device->func, 0x04));
   port_write_word(PCI_CONFIG_DATA, value);
 }
