@@ -14,7 +14,13 @@ uint32_t dhcp_calculate_tid() {
 }
 
 void dhcp_handle_packet(uint8_t *packet, uint16_t packet_len) {
-  log_info("(DHCP) Received Message");
+
+  dhcp_header_t *header = (dhcp_header_t*)packet;
+  uint32_t tid = ntohl(header->tid);
+
+  if (tid == dhcp_calculate_tid()) {
+    log_info("(DHCP) Received Message");
+  }
 }
 
 void dhcp_send_discover_message() {
