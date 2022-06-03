@@ -21,3 +21,10 @@ void pic_remap(uint8_t master_offset, uint8_t slave_offset) {
   port_write_byte(PIC_MASTER_DATA, 0x00);
   port_write_byte(PIC_SLAVE_DATA, 0x00);
 }
+
+void pic_ack(uint8_t irq) {
+  if (irq >= 0x28) {
+    port_write_byte(PIC_SLAVE_COMMAND, PIC_EOI);
+  }
+  port_write_byte(PIC_MASTER_COMMAND, PIC_EOI);
+}

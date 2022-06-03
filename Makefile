@@ -8,6 +8,8 @@ BOOT_OBJS := $(patsubst src/boot/src/%.c, bin/boot/%.o, $(BOOT_SRCS))
 KERNEL_LINK := src/kernel/link.ld
 KERNEL_SRCS := $(shell find src/kernel/src -name "*.c")
 KERNEL_OBJS := $(patsubst src/kernel/src/%.c, bin/kernel/%.o, $(KERNEL_SRCS))
+KERNEL_ASM_SRCS := $(shell find src/kernel/src -name "*.asm")
+KERNEL_ASM_OBJS := $(patsubst src/kernel/src/%.asm, bin/kernel/%.o, $(KERNEL_ASM_SRCS))
 
 run: bin/os.bin
 	qemu-system-i386 -m 2G -serial stdio -vga std -hda $<
@@ -19,10 +21,14 @@ bin/os.bin: bin/sect.bin bin/boot.bin bin/kernel.bin
 	mkdir -p $(dir $@)
 	cat $^ > $@
 
-bin/kernel.bin: bin/kernel/entry.o $(KERNEL_OBJS)
+bin/kernel.bin: bin/kernel/entry.o $(KERNEL_OBJS) $(KERNEL_ASM_OBJS)
 	mkdir -p $(dir $@)
 	$(LD) -o $@ -T $(KERNEL_LINK) $^ /usr/local/i386elfgcc/lib/gcc/i386-elf/4.9.1/libgcc.a --oformat binary
 	dd if=/dev/null of=$@ bs=1 count=1 seek=16384
+
+bin/kernel/%.o: src/kernel/src/%.asm
+	mkdir -p $(dir $@)
+	nasm -f elf $< -o $@
 
 bin/kernel/entry.o: src/kernel/entry.asm
 	mkdir -p $(dir $@)

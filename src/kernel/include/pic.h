@@ -13,6 +13,7 @@
 
 #include "type.h"
 
+void pic_ack(uint8_t irq);
 void pic_remap(uint8_t master_offset, uint8_t slave_offset);
 
 #endif
