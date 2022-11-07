@@ -1,5 +1,5 @@
-CC=i386-elf-gcc
-LD=i386-elf-ld
+CC=/usr/local/i386elfgcc/bin/i386-elf-gcc
+LD=/usr/local/i386elfgcc/bin/i386-elf-ld
 
 BOOT_LINK := boot/link.ld
 BOOT_SRCS := $(shell find boot/src -name "*.c")
