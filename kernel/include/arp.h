@@ -70,6 +70,12 @@ void arp_add_ip4_addr(
   uint8_t *ip_addr
 );
 
+void arp_send_ip4_packet(
+  uint16_t operation,
+  uint8_t *target_hardware_addr,
+  uint8_t *target_protocol_addr
+);
+
 void arp_init();
 void arp_handle_packet(uint8_t *packet, uint16_t packet_len);
 void arp_send_packet();

@@ -71,6 +71,8 @@ typedef struct dhcp_packet {
   int options_len;
 } dhcp_packet_t;
 
+extern uint8_t domain_server_ip[4];
+
 void dhcp_handle_packet(uint8_t *packet, uint16_t packet_len);
 void dhcp_send_packet(dhcp_packet_t *packet, uint8_t *dest_ip);
 void dhcp_send_discover_message();

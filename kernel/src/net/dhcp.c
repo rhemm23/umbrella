@@ -1,11 +1,14 @@
-
 #include "rtl8139.h"
 #include "string.h"
 #include "dhcp.h"
+#include "dns.h"
 #include "net.h"
 #include "udp.h"
 #include "log.h"
 #include "ip4.h"
+#include "arp.h"
+
+uint8_t domain_server_ip[4];
 
 typedef enum {
   DHCP_STATE_INIT,
@@ -209,6 +212,7 @@ void dhcp_handle_packet(uint8_t *packet, uint16_t packet_len) {
     case DHCP_STATE_SENT_REQUEST:
       if (options.message_type == DHCP_MSG_ACK) {
         memcpy(ip_address, header->yiaddr, 4);
+        memcpy(domain_server_ip, options.domain_server_ip, 4);
         log_info("(DHCP) Received Acknowledge");
         state = DHCP_STATE_RECEIVED_ACK;
       }

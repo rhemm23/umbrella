@@ -5,6 +5,8 @@
 #include "net.h"
 #include "log.h"
 #include "ip4.h"
+#include "dns.h"
+#include "dhcp.h"
 
 static arp_protocol_entry_set_t arp_table[ARP_MAX_SUPPORTED_PROTOCOLS];
 static int arp_table_cnt = 0;
