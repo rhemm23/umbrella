@@ -4,6 +4,7 @@
 #include "log.h"
 #include "arp.h"
 #include "ip4.h"
+#include "ip6.h"
 
 void ethernet_handle_packet(uint8_t *packet, uint16_t packet_len) {
 
@@ -22,7 +23,7 @@ void ethernet_handle_packet(uint8_t *packet, uint16_t packet_len) {
       break;
 
     case ETHERNET_TYPE_IP6:
-      log_info("(IP6) Packet Received");
+      ip6_handle_packet(packet_data, packet_length);
       break;
   }
 }

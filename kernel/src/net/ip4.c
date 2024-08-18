@@ -1,9 +1,11 @@
 #include "ethernet.h"
+#include "icmp6.h"
 #include "ip4.h"
 #include "net.h"
 #include "log.h"
 #include "arp.h"
 #include "udp.h"
+#include "tcp.h"
 
 uint8_t ip_address[4] = { 0, 0, 0, 0 };
 
@@ -16,15 +18,32 @@ void ip4_handle_packet(uint8_t *packet, uint16_t packet_len) {
 
   switch (header->protocol) {
     case IP_PROTO_TCP:
-      log_info("(IP4) TCP packet received");
+      tcp_handle_packet(packet_data, packet_length);
       break;
 
     case IP_PROTO_UDP:
       udp_handle_packet(packet_data, packet_length);
       break;
 
+    case IP_PROTO_HOPOPT:
+      log_info("(HOPOPT) Received Packet");
+      break;
+
+    case IP_PROTO_ICMP:
+      log_info("(ICMP) Received Packet");
+      break;
+
+    case IP_PROTO_IGMP:
+      log_info("(IGMP) Received Packet");
+      break;
+  
+    case IP_PROTO_ICMPv6:
+      icmp6_handle_packet(packet_data, packet_length);
+      break;
+
     default:
       log_info("(IP4) Unknown IP4 protocol");
+      logx(header->protocol);
       break;
   }
 }

@@ -3,8 +3,12 @@
 
 #define IP_DEFAULT_TTL 0x40
 
+#define IP_PROTO_HOPOPT 0x00
+#define IP_PROTO_ICMP 0x01
+#define IP_PROTO_IGMP 0x02
 #define IP_PROTO_TCP 0x06
 #define IP_PROTO_UDP 0x11
+#define IP_PROTO_ICMPv6 0x3A
 
 #include "type.h"
 
