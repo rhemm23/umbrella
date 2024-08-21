@@ -215,6 +215,9 @@ void dhcp_handle_packet(uint8_t *packet, uint16_t packet_len) {
         memcpy(domain_server_ip, options.domain_server_ip, 4);
         log_info("(DHCP) Received Acknowledge");
         state = DHCP_STATE_RECEIVED_ACK;
+
+        // TODO, find a better spot for this -- here because we need the domain server ip
+        dns_query_ip_addr("www.google.com");
       }
       break;
   }

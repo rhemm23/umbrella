@@ -3,18 +3,21 @@
 #include "dns.h"
 #include "net.h"
 #include "udp.h"
+#include "log.h"
 
 static uint16_t identification = 0;
+
+void dns_handle_packet(uint8_t *packet, uint16_t packet_len) {
+  log_info("(DNS) Received Response");
+}
 
 void dns_query_ip_addr(char *hostname) {
 
   dns_packet_t packet;
+  memset(&packet, 0x00, sizeof(dns_packet_t));
   packet.identification = identification++;
-  packet.flags = htons(0x01 << 15);
+  packet.flags.rcr_dsd = 1;
   packet.number_of_questions = htons(1);
-  packet.number_of_answer_rrs = 0;
-  packet.number_of_authority_rrs = 0;
-  packet.number_of_additional_rrs = 0;
 
   // Hostname string size
   char *temp = hostname;
@@ -27,8 +30,8 @@ void dns_query_ip_addr(char *hostname) {
   uint8_t question[size + 2];
   question[size + 1] = 0;
 
-  int index = 0;
-  int segment_size = 0;
+  uint8_t index = 0;
+  uint8_t segment_size = 0;
 
   while (hostname[index]) {
     if (hostname[index] == '.') {
@@ -54,13 +57,15 @@ void dns_query_ip_addr(char *hostname) {
   packet_data[index++] = DNS_QUERY_TYPE_A;
 
   packet_data[index++] = 0x00;
-  packet_data[index++] = DNS_QUERY_CLASS_IP;
+  packet_data[index++] = DNS_QUERY_CLASS_IN;
+
+  log_info("(DNS) Sending Query");
 
   udp_send_packet(
     packet_data,
     packet_len,
     domain_server_ip,
-    htons(1024),
-    htons(53)
+    DNS_CLIENT_PORT,
+    DNS_SERVER_PORT
   );
 }

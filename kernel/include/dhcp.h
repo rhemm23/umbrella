@@ -69,7 +69,7 @@ typedef struct dhcp_packet {
   dhcp_header_t header;
   dhcp_option_t options[DHCP_MAX_OPTIONS];
   int options_len;
-} dhcp_packet_t;
+} __attribute__((packed)) dhcp_packet_t;
 
 extern uint8_t domain_server_ip[4];
 

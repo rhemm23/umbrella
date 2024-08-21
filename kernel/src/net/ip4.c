@@ -97,8 +97,5 @@ void ip4_send_packet(uint8_t *packet, uint16_t packet_len, uint8_t dst_ip_addr[4
     packet_data[sizeof(ip4_header_t) + i] = packet[i];
   }
 
-  uint8_t *mac, *mac_len;
-  if (arp_lookup(ETHERNET_TYPE_IP4, dst_ip_addr, 4, mac, mac_len)) {
-    ethernet_send_packet(&packet_data[0], packet_len + sizeof(ip4_header_t), mac, ETHERNET_TYPE_IP4);
-  }
+  arp_handle_ip4_packet_send(dst_ip_addr, &packet_data[0], packet_len + sizeof(ip4_header_t));
 }

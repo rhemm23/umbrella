@@ -14,3 +14,12 @@ void memcpy(void *dest, void *src, uint32_t size) {
     dest_ptr[i] = src_ptr[i];
   }
 }
+
+uint8_t memcmp(uint8_t *a, uint8_t *b, uint32_t size) {
+  for (uint64_t i = 0 ; i < size; i++) {
+    if (a[i] != b[i]) {
+      return 0;
+    }
+  }
+  return 1;
+}

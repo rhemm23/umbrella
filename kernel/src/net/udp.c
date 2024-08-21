@@ -3,6 +3,7 @@
 #include "net.h"
 #include "ip4.h"
 #include "log.h"
+#include "dns.h"
 
 void udp_handle_packet(uint8_t *packet, uint16_t packet_len) {
 
@@ -15,10 +16,18 @@ void udp_handle_packet(uint8_t *packet, uint16_t packet_len) {
   uint8_t *packet_data = packet + sizeof(udp_header_t);
   uint16_t packet_length = packet_len - sizeof(udp_header_t);
 
-  if (src_port == DHCP_SERVER_PORT) {
-    dhcp_handle_packet(packet_data, packet_length);
-  } else {
-    log_info("(UDP) Received packet");
+  switch (src_port) {
+    case DHCP_SERVER_PORT:
+      dhcp_handle_packet(packet_data, packet_length);
+      break;
+
+    case DNS_SERVER_PORT:
+      dns_handle_packet(packet_data, packet_length);
+      break;
+
+    default:
+      log_info("(UDP) Received Packet");
+      break;
   }
 }
 

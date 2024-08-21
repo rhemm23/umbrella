@@ -6,6 +6,7 @@
 #define ARP_ADDR_MAX_LEN 16
 #define ARP_MAX_SUPPORTED_PROTOCOLS 2
 #define ARP_MAX_ENTRIES_PER_PROTOCOL 8
+#define ARP_MAX_IP4_QUEUED_PACKETS 4
 
 #define ARP_OP_REQUEST 0x01
 #define ARP_OP_REPLY 0x02
@@ -57,10 +58,15 @@ typedef struct {
   uint16_t operation;
 } __attribute__((packed)) arp_header_t;
 
+typedef struct {
+  uint8_t ip_address[4];
+  uint16_t packet_len;
+  uint8_t packet[1518];
+} __attribute__((packed)) arp_queued_ip4_packet_t;
+
 int arp_lookup(
   uint16_t protocol_type,
   uint8_t *protocol_addr,
-  uint8_t protocol_addr_len,
   uint8_t *hardware_addr,
   uint8_t *hardware_addr_len
 );
@@ -70,14 +76,24 @@ void arp_add_ip4_addr(
   uint8_t *ip_addr
 );
 
+void arp_send_ip4_request(
+  uint8_t *target_ip4_addr
+);
+
+void arp_send_ip4_reply(
+  uint8_t *target_mac_addr,
+  uint8_t *target_ip4_addr
+);
+
 void arp_send_ip4_packet(
   uint16_t operation,
-  uint8_t *target_hardware_addr,
-  uint8_t *target_protocol_addr
+  uint8_t *target_mac_addr,
+  uint8_t *target_ip4_addr
 );
 
 void arp_init();
 void arp_handle_packet(uint8_t *packet, uint16_t packet_len);
+void arp_handle_ip4_packet_send(uint8_t *dst_ip_address, uint8_t *packet, uint16_t packet_len);
 void arp_send_packet();
 
 #endif
