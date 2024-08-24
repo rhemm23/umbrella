@@ -15,8 +15,8 @@ uint32_t page_align(uint32_t value) {
 }
 
 void read_ram_regions() {
-  ram_region_t *ram_region_ptr = (ram_region_t*)(MEM_ADDRESS + sizeof(uint32_t));
-  num_ram_regions = *((uint32_t*)MEM_ADDRESS);
+  ram_region_t *ram_region_ptr = (ram_region_t*)(KERNEL_TRANSFER_MEM + sizeof(uint32_t));
+  num_ram_regions = *((uint32_t*)KERNEL_TRANSFER_MEM);
   for (int i = 0; i < num_ram_regions; i++) {
     ram_regions[i] = ram_region_ptr[i];
   }
